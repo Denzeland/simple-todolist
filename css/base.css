@@ -1,0 +1,175 @@
+* {
+     transition: background 0.4s;
+     box-sizing: border-box;
+     outline: 0;
+}
+
+body {
+    background: #acc5ea;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    color: #f4f5f7;
+    text-shadow: -1px -1px 1px #fff, 1px 1px 1px #000;
+}
+/*总容器的通用样式*/
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+} 
+
+input,
+.task-item,
+.task-detail-mask,
+.task-detail,
+button,
+textarea {
+    border-radius: 3px;
+    padding: 10px;
+    border: 0;
+}
+
+input[type=text],
+input[type=date],
+input[name=content],
+textarea
+{
+    display: block;
+    width: 100%;
+    background: #eee;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .4);
+}
+
+button {
+    display: inline-block;
+    background: #acc5ea;
+    cursor: pointer;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .4);
+}
+
+.add-task [type=text] {
+    float: left;
+    width: 84%;
+    margin-right: 1%;
+    
+}
+
+.add-task [type=text]:hover,
+.add-task [type=text]:focus {
+    background: #acc5ea;
+    box-shadow: none;
+}
+
+.add-task [type=submit] {
+    width: 15%;
+}
+
+.add-task [type=submit]:hover {
+    background: #73a1e4;
+}
+
+.task-list {
+    margin: 10px 0;
+}
+
+.task-item {
+    color: #333;
+    background: #fff;
+    margin-bottom: 2px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .4);
+    cursor: pointer;
+}
+
+
+.task-item:hover {
+    background: #eee;
+}
+
+.task-detail-mask {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(30, 30, 30, 0.2);
+}
+
+.task-detail {
+    padding: 10px;
+    position: fixed;
+    top: 10%;
+    left: 30%;
+    width: 30%;
+    background: #fff;
+    overflow: auto;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .4);
+}
+
+.task-detail .content.input-item p{
+    font-weight: 900;
+    text-align: center;
+}
+
+.content {
+    cursor: pointer;
+}
+
+.task-detail .input-item {
+    margin-bottom: 5px;
+}
+
+textarea {
+    resize: none;
+    min-height: 100px;
+    background-color: #eee;
+}
+
+input[name=content]:hover {
+    background: #e2dada;
+}
+
+textarea:hover {
+    background: #e2dada;
+}
+
+label {
+    display: block;
+}
+.detail-btn {
+    width: 100%;
+}
+
+.task-detail,
+.task-detail-mask {
+    display: none;
+}
+
+.fr {
+    float: right;
+}
+
+.action:hover {
+    font-weight: 900;
+}
+
+.task-item.completed:after {
+    content: " ";
+    position: relative;
+    top: -8px;
+    height: 1px;
+    width: 96%;
+    background-color: #aaa;
+    display: block;
+}
+
+.task-item.completed {
+    color: #aaa;
+    /*background: rgba(255,255,255,.7);*/
+    opacity: 0.4;
+}
+
+
+
