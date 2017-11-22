@@ -10,6 +10,11 @@
         , $update_form
         , $task_detail_
         , $completed_checkbox
+        , $msg = $(".msg")
+        , $msg_content = $(".msg-content")
+        , $alerter = $(".remind-music")
+        , $window = $(window)
+        , $body = $("body")
         ;
 
      init();
@@ -33,8 +38,10 @@
         $delete_task.on("click", function() {
         var $item = $(this).parent().parent();
         var $index = $item.data("index");
-        var temp = confirm("确定删除吗？")
-        temp? delete_task($index): null;
+        pop("确定删除吗？")
+            .then(function (r) {
+            r ? delete_task($index) : null;
+            })
         })
     }
     //给详情按钮注册点击事件，显示详情页
@@ -96,13 +103,14 @@
                         '<textarea name="desc" placeholder="这里写备忘录的详情">' + (item.desc || '') + '</textarea>' +
                     '</div>' +
                 '<div class="remind input-item">' + '<label for="">提醒时间</label>' +
-                    '<input type="date" value="'+ item.time +'"/>' + 
+                    '<input class="datetime" type="text" value="'+ (item.time || '') +'"/>' + 
                 '</div>' +
                 '<div class="input-item"><button class="detail-btn" type="submit">更改</button></div>' +
             '</form>';
         
         $task_detail.html("");
         $task_detail.html(tpl);
+        $(".datetime").datetimepicker();
 
         $update_form = $task_detail.find("form");
         var $task_detail_content = $update_form.find(".content");
@@ -144,8 +152,10 @@
     
     function init() {
         task_list = store.get("task_list") || [];
+        listen_msg_event();
         if(task_list.length) {
             render_task_list();
+            check_task_remind();
         }
     }
 
@@ -193,4 +203,125 @@
             //返回模板的jQuery对象
         return $(task_item_tpl);
     }
+
+    function check_task_remind() {
+        var itl = setInterval(function() {
+            for (var i = 0; i < task_list.length; i++) {
+                var item = store.get("task_list")[i];
+                if (!item || !item.time || item.informed)
+                    continue;
+                var currentTime = (new Date()).getTime();
+                var taskTime = (new Date(item.time)).getTime();
+                if (currentTime - taskTime >=1) {
+                    update_task_detail(i, {informed: true});
+                    show_msg(item.content);
+                }
+            }
+        }, 300)
+    }
+
+    function listen_msg_event() {
+    $(".confirmed").on('click', function () {
+        hide_msg();
+    })
+  }
+
+    function show_msg(msg) {
+    if (!msg) return;
+
+    $msg_content.html(msg);
+    $alerter.get(0).play();
+    $msg.show();
+  }
+
+  function hide_msg() {
+    $msg.hide();
+  }
+
+  //自定义alert模块
+  function pop(info) {
+    if (!info) {
+        console.log("pop函数需要传递参数！");
+    }
+
+    var conf = {}
+      , $pop
+      , $mask
+      , dfd
+      , $confirm
+      , $cancel
+      , confirmed
+      , timer
+      , $pop_title
+      , $pop_btn
+      ;
+
+      dfd = $.Deferred();
+    if (typeof info == "string") {
+        conf.title = info;
+    } else {
+        conf = $.extend(conf, info);
+    }
+
+    $pop = $("<div class='pop'>" + 
+        "<div class='pop-title'>" + conf.title + "</div>" + 
+        "<div class='pop-btn'>" + 
+        "<div>" + 
+        "<button class='pop-confirm'>确定</button>" +
+        "<button class='pop-cancel'>取消</button>" + 
+        "</div>" + 
+        "</div>" +
+        "</div>");
+    $mask = $("<div></div>");
+
+    $pop_title = $pop.find(".pop-title");
+    $pop_btn = $pop.find(".pop-btn");
+
+    $confirm = $pop_btn.find("button.pop-confirm");
+    $cancel = $pop_btn.find("button.pop-cancel");
+    $cancel.css({
+        background: '#fff',
+        'margin-left': 25
+    });
+
+    timer = setInterval(function() {
+        if (confirmed !== undefined) {
+            dfd.resolve(confirmed);
+            clearInterval(timer);
+            delete_pop();
+        }
+    }, 50)
+
+    $confirm.on('click', on_confirm);
+    $cancel.on('click', on_cancel);
+    $mask.on('click', on_cancel);
+
+    function on_confirm() {
+        confirmed = true;
+    }
+
+    function on_cancel() {
+        confirmed = false;
+    }
+
+    function delete_pop() {
+        $mask.remove();
+        $pop.remove();
+    }
+
+    function adjust_pop_position() {
+        var moveLeft = ($window.width() - $pop.width()) / 2;
+        var moveTop = ($window.height() - $pop.height()) / 2 - 30;
+        $pop.css({left: moveLeft, top: moveTop});
+    }
+
+    $window.on("resize", function() {
+        adjust_pop_position();
+    })
+    $mask.appendTo($body);
+    $pop.appendTo($body);
+    $window.resize();
+    return dfd.promise();
+  }
+
 })();

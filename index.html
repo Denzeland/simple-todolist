@@ -6,24 +6,28 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>My Todo App</title>
     <link href="node_modules/normalize.css/normalize.css" rel="stylesheet">
+    <link rel="stylesheet" href="node_modules/jquery-datetimepicker/build/jquery.datetimepicker.min.css" />
     <link rel="stylesheet" href="css/base.css"/>
 </head>
 <body>
+<!-- 任务提醒模块开始 -->
+    <div class="msg">
+        <p class="msg-content"></p>
+        <p class="confirmed">知道了</p>
+    </div>
+<!-- 任务提醒模块结束 -->
+<!-- 这是主要容器-->
     <div class="container">
         <h1>请添加备忘录</h1>
         <form class="add-task">
             <input name="content" type="text" autocomplete="off" autofocus placeholder="e.g.明天上午9点开会" />
             <button type="submit">提交</button>
         </form>
+        <!-- 任务列表容器 ，任务动态的添加在里面-->
         <div class="task-list">
-        <!--    <div class="task-item">-->
-        <!--        <span><input type="checkbox"/></span>-->
-        <!--        <span>item content 1</span>-->
-        <!--        <span>delete</span>-->
-        <!--        <span>details</span>-->
-        <!--    </div>-->
         </div>
         <div class="task-detail-mask"></div>
+        <!-- 任务详情容器 -->
         <div class="task-detail">
             <div>
                     <div class="content">下午记得买菜</div>
@@ -39,11 +43,12 @@
                 </div>
             </div>  
         </div>
+        <!-- 任务详情容器结束 -->
     </div>
-
+<video class="remind-music" src="alert.mp3">知道了</video>
 <script src="node_modules/jquery/dist/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script src="node_modules/store/store.js"></script>
-<script src="js/base.js"type="text/javascript" charset="utf-8">
-</script>
+<script src="node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.js"></script>
+<script src="js/base.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
