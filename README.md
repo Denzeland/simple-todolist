@@ -24,18 +24,18 @@
 
 *入口函数init以及渲染任务关键代码：*
 > ```
-> //主入口函数
->       function init() {//每次用浏览器打开应用，都将浏览器localstorage中存储的任务数据取出并渲染出来
-        task_list = store.get("task_list") || [];
-        //每次用浏览器打开应用，都检测下消息提醒
-        listen_msg_event();
-        if(task_list.length) {
-            render_task_list();
-            check_task_remind();
+>       //主入口函数
+      function init() {//每次用浏览器打开应用，都将浏览器localstorage中存储的任务数据取出并渲染出来
+            task_list = store.get("task_list") || [];
+            //每次用浏览器打开应用，都检测下消息提醒
+            listen_msg_event();
+            if(task_list.length) {
+                render_task_list();
+                check_task_remind();
+            }
         }
-    }
-    // 将每一项任务添加（渲染）到DOM结构中，渲染结束后要监听删除和详情事件
-    function render_task_list() {
+        // 将每一项任务添加（渲染）到DOM结构中，渲染结束后要监听删除和详情事件
+        function render_task_list() {
         var $task_list = $(".task-list");
         $task_list.html("");
         var completed_items = [];
@@ -64,5 +64,6 @@
         listen_completed_checkbox();
     }
     ```
+
 
 
