@@ -23,6 +23,7 @@
 5. 删除提醒弹框采用自定义模板渲染，利用promise机制异步完成任务删除，用一个定时器setInterval来测试用户是否单击了弹框的按钮
 
 *入口函数init以及渲染任务关键代码：*
+>  ```
 >  //主入口函数
 >       function init() {
 >  //每次用浏览器打开应用，都将浏览器localstorage中存储的任务数据取出并渲染出来
@@ -63,5 +64,6 @@
         listern_task_detail();
         listen_completed_checkbox();
     }
+    ```
 
 
