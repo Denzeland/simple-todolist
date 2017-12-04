@@ -26,7 +26,7 @@
 > ```
 >   //主入口函数
 >      function init() {
->  //每次用浏览器打开应用，都将浏览器localstorage中存储的任务数据取出并渲染出来
+>      //每次用浏览器打开应用，都将浏览器localstorage中存储的任务数据取出并渲染出来
         task_list = store.get("task_list") || [];
         //每次用浏览器打开应用，都检测下消息提醒
         listen_msg_event();
