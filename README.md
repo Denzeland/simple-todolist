@@ -20,7 +20,7 @@
 2. 每条任务的数据存储采用浏览器本地存储localstorage，并引用了stor.js库
 3. 项目采用jQuery编写js，整个js布局采用一个入口函数init(),其他函数都是定义功能方法
 4. 为了提高用户体验，提醒时间表单采用jQuery插件datetimepicker，可以具体到时间点
-5. 删除提醒弹框采用自定义模板渲染，利用promise机制异步完成任务删除，用一个定时器setInterval来测试用户是否单击了弹框的按钮
+5. 删除提醒弹框采用自定义模板渲染，利用jQuery的deferred对象异步完成任务删除，用一个定时器setInterval来测试用户是否单击了弹框的按钮
 
 *入口函数init以及渲染任务关键代码：*
 > ```
@@ -63,7 +63,7 @@
         listern_task_detail();
         listen_completed_checkbox();
     }
-    ```
+> ```
 
 
 
